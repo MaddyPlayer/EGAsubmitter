@@ -28,6 +28,8 @@ COPY EGAsubmitter.yml EGAsubmitter.yml
 
 RUN conda env create -f EGAsubmitter.yml
 
+RUN sed -i 's/python3.10/python3.9/1' /opt/conda/envs/EGAsubmitter/bin/crypt4gh
+
 ENV PATH "/opt/conda/bin:/opt/conda/envs/${CONDA_ENV_NAME}/bin:${PATH}"
 ENV CONDA_DEFAULT_ENV $CONDA_ENV_NAME
 ENV CONDA_PREFIX /opt/conda/envs/$CONDA_ENV_NAME
