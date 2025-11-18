@@ -26,11 +26,11 @@ import json, sys, os
 
 parser = ap.ArgumentParser(description="Build all the Runs object for the samples to upload")
 parser.add_argument("-p", "--path", help="Main path to store everything", required=True)
-parser.add_argument("-i", "--input", help="Dataframe with the Files provisional IDs", required=True)
+# parser.add_argument("-i", "--input", help="Dataframe with the Files provisional IDs", required=True)
 parser.add_argument("-j", "--template", help="Path to JSON templates for paired and single runs", required=True)
 parser.add_argument("-t", "--type", help="File type given by the user", required=True)
 parser.add_argument("-o", "--output", help="Output .csv file name", required=True)
-parser.add_argument("-d", "--done", help=".done file", required=True)
+# parser.add_argument("-d", "--done", help=".done file", required=True)
 
 args = parser.parse_args()
 
