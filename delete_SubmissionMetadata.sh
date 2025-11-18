@@ -18,7 +18,7 @@ while true; do
 NOTE: Your .csv and .yaml files will not be deleted anyway
 " yn
     case $yn in
-        [Yy]* ) find dataset/user_folder/ ! -name *.yaml ! -name *.gitkeep ! -name *.csv ! -name *.tsv -type f -delete; echo "All files have been deleted"; break;;
+        [Yy]* ) find dataset/user_folder/ ! -name *.yaml ! -name *.gitkeep ! -name *.csv ! -name *_3cols.tsv -type f -delete; echo "All files have been deleted"; break;;
         [Nn]* ) exit;;
         * ) echo "Please, answer y|yes or n|no.";;
     esac
