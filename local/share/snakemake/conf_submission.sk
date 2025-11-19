@@ -135,7 +135,7 @@ def curl_submit(token_file, input_json, url, output_id, log_file):
         f"""
             token=$(cat {{token_file}})
             curl {{url}} -H "Content-type: application/json" -H "Authorization: Bearer $token" -d @{{input_json}} > {{log_file}}
-            if grep -q -E "400|401|500" {{log_file}}; then
+            if grep -q -w -E "400|401|500" {{log_file}}; then
                 echo "Submission failed. Reason:"
                 cat {{log_file}}
                 exit 1
