@@ -60,8 +60,8 @@ Once the .csv file is ready, please launch the command
 It will ask you the name of your project, or simply the folder where to store encrypted files (dataset/encrypting-uploading/crypt4GH/*yourprojectname*/), and the number of cores you want to use. Depending on what machine you are working, be careful to set a reasonable number :-).  
 We suggest to use different folders for different files type, if you have more than one.  
 
-If the encryption stops, please use `$ ./encrypt-upload.sh` again.  
-**Unfortunately, after the structure has been changed by EGA, I still was not able to re-implement the recovery of the upload if it stops. Therefore, if it does, you will need to restart it from 0. I advise you to start it in a bash screen to reduce risks. I am sorry for this drawback: I will fix this asap.**
+If the encryption stops, please use `$ ./transferRecovery.sh`: sftp will look for dimensions differences between local and remote files, and if the remote is smaller than the local, it restarts the upload from that.
+**I advise you to start it in a bash screen to reduce the risk of interruptions.**
 
 # Filling other metadata files (.yaml):
 Once you have encrypted and uploaded all your files, it is time to fill and submit your metadata.  
