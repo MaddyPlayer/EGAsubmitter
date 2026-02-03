@@ -51,16 +51,44 @@ rule yaml_conversion:
 
 ## rules to obtain file provisional IDs
 rule get_files:
-    input: token = ancient("dataset/SessionToken")
+    input: 
+        token = ancient("dataset/SessionToken"),
+        filenames = ancient(USER_METADATA + "/All_files-names.txt")
     params: path = EGA_URL
     output: USER_METADATA + "/Files_IDs.json"
-    shell:
-        """
-            token=$(cat {input.token})
-            curl --request GET {params.path}/files?status=inbox \
-                -H "Content-type: application/json" \
-                -H "Authorization: Bearer $token" > {output}
-        """
+    run:      
+        ### Read the login token
+        with open(input.token, 'r') as f:
+            token = f.read().strip()
+        ### Read all file paths and extract basenames
+        with open(input.filenames, 'r') as f:
+            file_paths = [line.strip() for line in f if line.strip()]
+        print(f"Loaded {len(file_paths)} file paths")
+        ### Query the EGA API for each file and store the results in a list
+        all_results = []
+        for i, file_path in enumerate(file_paths, 1):
+            basename = "/" + os.path.basename(file_path)
+            url = f"{params.path}/files?status=inbox&prefix={basename}"
+            print(f"[{i}/{len(file_paths)}] Querying: {basename}")
+            
+            result = subprocess.run(
+                ["curl", "--silent", "--request", "GET", url,
+                 "-H", "Content-type: application/json",
+                 "-H", f"Authorization: Bearer {token}"],
+                capture_output=True, text=True
+            )
+            ### Try to parse the response and store the results in a list
+            try:
+                response_data = json.loads(result.stdout)
+                if isinstance(response_data, list):
+                    all_results.extend(response_data)
+                else:
+                    all_results.append(response_data)
+            except json.JSONDecodeError:
+                print(f"Warning: Could not parse response for {basename}")
+        ### Write combined results
+        with open(output[0], 'w') as f:
+            json.dump(all_results, f, indent=2)
 rule convert:
     input: json = USER_METADATA + "/Files_IDs.json"
     output: df = USER_METADATA + "/Files_IDs.tsv"

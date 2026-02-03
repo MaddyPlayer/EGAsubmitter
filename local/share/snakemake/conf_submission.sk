@@ -32,6 +32,8 @@ def find_prj_root(path=os.getcwd()):
 import yaml, json, glob, sys, os, csv
 import ruamel.yaml
 import pandas as pd
+import subprocess
+
 
 ### Configuration and paths
 PRJ_ROOT = find_prj_root()
