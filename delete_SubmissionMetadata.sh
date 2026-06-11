@@ -15,10 +15,10 @@ done
 
 while true; do
     read -p "Are you sure you want to delete all files in user_folder folder?
-NOTE: Your .csv and .yaml files will not be deleted anyway
+NOTE: Your .csv and .yaml files will not be deleted anyway and the list file will not be deleted either
 " yn
     case $yn in
-        [Yy]* ) find dataset/user_folder/ ! -name *.yaml ! -name *.gitkeep ! -name *.csv ! -name *_3cols.tsv -type f -delete; echo "All files have been deleted"; break;;
+        [Yy]* ) find dataset/user_folder/ ! -name *.yaml ! -name *.gitkeep ! -name *.csv ! -name *_3cols.tsv ! -name All_files-names.txt -type f -delete; echo "All files have been deleted"; break;;
         [Nn]* ) exit;;
         * ) echo "Please, answer y|yes or n|no.";;
     esac
